@@ -1,0 +1,88 @@
+import java.util.Scanner;
+/**
+ * 家庭收支表
+ */
+public class FamilyAccount {
+    public static void main(String[] args)
+    {
+        //            读取键盘输入，获取用户选择
+        char c;
+        char select='y';
+        int transfer;   //收入
+        int withdraw;   //支出
+        int money=1000; //初始账号金额
+        String comment; //说明
+//            details记录用户账号信息
+        String details="收支\t\t账户金额\t\t收支金额\t\t说明\n";
+
+//        显示菜单
+        while (true)
+        {
+            System.out.println("-------家庭收支记账软件-------");
+            System.out.println("\t\t1、收支明细");
+            System.out.println("\t\t2、登记收入");
+            System.out.println("\t\t3、登记支出");
+            System.out.println("\t\t4、退   出");
+            System.out.print("\t\t请输入（1-4）：");
+
+            Scanner in=new Scanner(System.in);
+            while (true)
+            {
+               String str=in.nextLine();
+               c=str.charAt(0);
+                if (c!='1' && c!='2' && c!='3' && c!='4')
+                    System.out.print("非法选择，请重新输入：");
+                else
+                    break;
+            }
+            switch (c)
+            {
+                case '1':
+                    System.out.println("-------当前收支明细记录-------");
+                    System.out.println(details);
+                    System.out.println("---------------------------");
+                    break;
+                case '2':
+                    System.out.print("本次收入金额：");
+                    transfer=in.nextInt();
+                    System.out.print("本次收入说明：");
+                    comment=in.next();
+//                    处理账号信息
+                    money+=transfer;
+                    details+="收入\t\t"+money+"\t\t"+transfer+"\t\t\t"+comment+"\n";
+                    System.out.println(details);
+                    break;
+                case '3':
+                    System.out.print("本次支出金额：");
+                    withdraw=in.nextInt();
+                    if (withdraw>money)
+                    {
+                        System.out.println("没那么多钱还想花！");
+                        break;
+                    }
+                    else
+                        money-=withdraw;
+                    System.out.print("本次支出说明：");
+                    comment=in.next();
+//                    处理账号信息
+                    details+="支出\t\t"+money+"\t\t\t"+withdraw+"\t\t\t"+comment+"\n";
+                    System.out.println(details);
+                    break;
+                case '4':
+                    System.out.print("是否确认退出<Y/N>：");
+                    while (true)
+                    {
+                        String s=in.nextLine().toUpperCase();
+                        select=s.charAt(0);
+                        if (select=='Y' || select=='N')
+                            break;
+                        else
+                            System.out.print("非法选择，请重新输入：");
+                    }
+            }
+            if (select=='Y')
+                 break;
+        }
+
+    }
+}
